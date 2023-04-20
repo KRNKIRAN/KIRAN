@@ -1,0 +1,237 @@
+
+
+<div class="container">
+  <div class="box box-default">
+   <mat-stepper [linear]="isLinear" #stepper>
+     <mat-step [stepControl]="firstFormGroup">
+       <form [formGroup]="addQuotation" (ngSubmit) = "saveQuotation()">
+         <ng-template matStepLabel>Fill out your name</ng-template>
+           
+          <div  class="form-group row">
+ 
+           <div class="col-md-3">
+             <div class="form-group">
+                 <label for="name">Quotation Ref No.<span>*</span></label>
+                 <input type="text" class="form-control" id="ref_number"  [value]="SelectRefereno" [(ngModel)]="SelectRefereno" formControlName="ref_number"    name="ref_number">
+               </div>
+           </div>
+ 
+           <div class="col-md-3">
+             <div class="form-group">
+               <label for="name">Line<span>*</span></label>
+               <input type="text"  class="form-control" matInput   formControlName="line"
+                matInput  [formControl]="LineControl"  [matAutocomplete]="autol"  >
+               <mat-autocomplete #autol="matAutocomplete"   (optionSelected)='selectOption($event)' >
+                 <mat-option *ngFor="let optionL of  LinefilteredOptions | async"  [value]="optionL.code" >
+                   {{optionL.code}}
+                 </mat-option>
+               </mat-autocomplete>
+           </div>
+         </div>
+         <!-- <div class="col-md-3">
+           <div class="form-group">
+             <label for="name">Number<span>*</span></label>
+             <input type="text"  placeholder="Pick one" class="form-control"  aria-label="Number"
+              matInput  [formControl]="myControl"  [matAutocomplete]="auto">
+             <mat-autocomplete #auto="matAutocomplete">
+               <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                 {{option}}
+               </mat-option>
+             </mat-autocomplete>
+         </div>
+       </div> -->
+ 
+          
+           <div class="col-md-3">
+             <div class="form-group">
+               <label for="name">POL Agent<span>*</span></label>
+               <input type="text"  class="form-control"  
+                matInput  [formControl]="POLAgentControl"  [matAutocomplete]="autoPOLAgent" >
+               <mat-autocomplete #autoPOLAgent="matAutocomplete"   >
+                 <mat-option *ngFor="let POLAgent of  POLAgentfilteredOptions | async"  [value]="POLAgent.code" >
+                   {{POLAgent.code}}
+                 </mat-option>
+               </mat-autocomplete>
+           </div>
+         </div>
+ 
+         </div>
+ 
+         <div  class="form-group row">
+           <div class="col-md-3">
+             <div class="form-group">
+                 <label for="name">POD Agent<span>*</span></label>
+                 <input type="text" class="form-control" id="podagent" [value]="officename" formControlName="pod_office"  (click)="openDialog()"  data-bs-target="#exampleModal"  name="podagent">
+               
+             </div>
+           </div>
+           <div class="col-md-6">
+             <div class="form-group">
+               <label for="name">Party<span>*</span></label>
+               <input type="text"  class="form-control"  formControlName="pod_office"
+                matInput  [formControl]="PartyControl"  [matAutocomplete]="autoparty" >
+               <mat-autocomplete #autoparty="matAutocomplete"   >
+                 <mat-option *ngFor="let Party of  PartyfilteredOptions | async"  [value]="Party.partyName" >
+                   {{Party.partyName}}
+                 </mat-option>
+               </mat-autocomplete>
+             </div>
+           </div>
+         
+         </div>
+ 
+         <div  class="form-group row">
+          <div class="col-md-5">
+              <div class="form-group">
+                
+              <mat-form-field appearance="fill">
+                  <label for="name">Valid From<span>*</span></label>
+              <input matInput [matDatepicker]="pickerFrom"   formControlName="valid_from">
+              <mat-datepicker-toggle matIconSuffix [for]="pickerFrom" ></mat-datepicker-toggle>
+              <mat-datepicker #pickerFrom format="yyyy-MM-dd"></mat-datepicker>
+              </mat-form-field>
+              </div>
+          </div>
+          <div class="col-md-5">
+              <div class="form-group">
+                 
+              <mat-form-field appearance="fill">
+                  <label for="name">Valid To<span>*</span></label>
+              <input matInput [matDatepicker]="pickerTo"  formControlName="valid_to">
+              <mat-datepicker-toggle matIconSuffix [for]="pickerTo" ></mat-datepicker-toggle>
+              <mat-datepicker #pickerTo></mat-datepicker>
+              </mat-form-field>
+              </div>
+          </div>
+
+          <div class="col-md-2">
+              <div class="form-group">
+                <label for="name">Currency<span>*</span></label>
+                <select  name="currency"  class="form-control" id="currency"  formControlName="currency" >
+                  <option *ngFor="let curr of Currency" [value]="curr.id">{{curr.code}}</option>
+                </select>
+              </div>
+             </div>  
+
+      </div>
+
+      <div  class="form-group row">
+      <div class="col-md-3">
+          <div class="form-group">
+            <label for="name">POL<span>*</span></label>
+            <input type="text"  class="form-control"  formControlName="pol_office"
+             matInput  [formControl]="POLControl"  [matAutocomplete]="POLauto" >
+            <mat-autocomplete #POLauto="matAutocomplete"   >
+              <mat-option *ngFor="let POL of  POLfilteredOptions | async"  [value]="POL.code" >
+                {{POL.code}}
+              </mat-option>
+            </mat-autocomplete>
+        </div>
+      </div>
+
+
+      <div class="col-md-3">
+          <div class="form-group">
+            <label for="name">POD<span>*</span></label>
+            <input type="text"  class="form-control"  formControlName="pod_office"
+             matInput  [formControl]="PODControl"  [matAutocomplete]="PODauto" >
+            <mat-autocomplete #PODauto="matAutocomplete"   >
+              <mat-option *ngFor="let POL of  PODfilteredOptions | async"  [value]="POL.code" >
+                {{POL.code}}
+              </mat-option>
+            </mat-autocomplete>
+        </div>
+      </div>
+  </div>
+  
+
+  <div  class="form-group row">
+      <div class="col-md-3">
+          <div class="form-group">
+            <label for="name">Cargo Type<span>*</span></label>
+            <select  name="cargo"  class="form-select" id="cargo"   >
+              <option *ngFor="let cargo of CargoType" [value]="cargo.id">{{cargo.code}}</option>
+            </select>
+        </div>
+      </div>
+
+
+      <div class="col-md-3">
+          <div class="form-group">
+            <label for="name">Stuffing<span>*</span></label>
+            <select  name="Stuffing" class="form-select" id="Stuffing"   >
+              <option *ngFor="let stuf of Stuffing" [value]="stuf.code">{{stuf.code}}</option>
+            </select>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+          <div class="form-group">
+            <label for="name">Destuffing<span>*</span></label>
+            <select  name="Destuffing"  class="form-select" id="Destuffing"   >
+              <option *ngFor="let destff of Stuffing" [value]="destff.code">{{destff.code}}</option>
+            </select>
+        </div>
+      </div>
+  </div>
+
+
+         <div>
+           <button  class="btn btn-default" data-toggle="modal" >Clear</button>
+           <button mat-button matStepperNext class="btn btn-success" >Save and Next</button>
+         </div>
+        
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+       </form>
+     </mat-step>
+     <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+       <form [formGroup]="secondFormGroup">
+        
+        
+         
+     
+         
+ 
+ 
+         <div>
+           <button mat-button matStepperPrevious>Back</button>
+           <button mat-button matStepperNext>Next</button>
+         </div>
+       </form>
+     </mat-step>
+     <mat-step>
+       <ng-template matStepLabel>Done</ng-template>
+       <p>You are now done.</p>
+       <div>
+         <button mat-button matStepperPrevious>Back</button>
+         <button mat-button (click)="stepper.reset()">Reset</button>
+       </div>
+     </mat-step>
+   </mat-stepper>
+ </div>
+ </div>
+ 
+ <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         ...
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-primary">Save changes</button>
+       </div>
+     </div>
+   </div>
+ </div>
+ 

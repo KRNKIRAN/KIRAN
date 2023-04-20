@@ -1,0 +1,130 @@
+<div class="container">
+ 
+    <h3>Create Port</h3>
+    <form [formGroup] = "addport" (ngSubmit) = "savePortData()" >
+    <div  class="form-group row">
+   
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="name">Type<span>*</span></label>
+        <select class="form-select" name="portType" id="portType" [(ngModel)]="selectedValue" formControlName="portType">
+            <option  value="SP">Sea port</option>
+            <option  value="DP">Dry port</option>
+        </select>
+      </div>
+     </div>  
+
+     <div class="col-md-3">
+      <div class="form-group">
+        <label for="name">Sector<span>*</span></label>
+     <select name="sector" id="sector" [(ngModel)]="selectedsector" class="form-select" formControlName="sector">
+      <option *ngFor="let name of Sector" [value]="name.id">{{name.name}}</option>
+  </select>
+</div>
+</div>  
+
+
+    <div class="col-md-3">
+        <div class="form-group">
+          <label for="name">Port/ICD Name<span>*</span></label>
+          <input type="text" class="form-control" id="name" formControlName="name" required name="name">
+        </div>
+       
+      </div>   
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="name">Port/ICD Code<span>*</span></label>
+        <input type="text" class="form-control" id="code" formControlName="code" required name="code">
+      </div>
+     
+   </div>
+  </div>
+   <div  class="form-group row">  
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="name">Description<span>*</span></label>
+        <input type="text" class="form-control" id="description" formControlName="description" required name="description">
+      </div>
+     
+  
+    </div>  
+    <div class="col-md-3">
+     <div class="form-group">
+       <label for="name">ISO Location Code<span>*</span></label>
+       <input type="text" class="form-control" id="isoLocode" formControlName="isoLocode"  required name="isoLocode">
+     </div>
+   </div>
+   
+   <div class="col-md-3">
+    <div class="form-group">
+    
+      <label for="name">Country<span>*</span></label>
+      <select class="form-select"  #mySelect name = "countryId"  [(ngModel)]="selectedcountry"  formControlName="countryId"
+       (change)='onOptionsSelected(mySelect.value)' >
+        <option *ngFor="let name of country" [value]="name.id">{{name.name}}</option>
+    </select>
+    </div>
+   </div>  
+   <div class="col-md-3">
+    <div  class="form-group">
+      <label for="name">State<span>*</span></label>
+      <select class="form-select" #mySelectstate name = "stateId"  [(ngModel)]="selectedstate" formControlName="stateId"  (change)='onOptionsSelectedstate(mySelect.value)'>
+        <option *ngFor="let name of State" [value]="name.id">{{name.name}}</option>
+    </select>
+    </div>
+   </div> 
+   
+   <div  class="form-group row">  
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="name">City/Province<span>*</span></label>
+        <input type="text" class="form-control" id="cityId" formControlName="cityId" required name="cityId">
+      </div>
+     
+   </div>
+   </div> 
+
+    <div class="col-md-12">
+    <div class="form-group">
+    
+    <button type="submit" class="btn btn-success" >Submit</button> 
+   
+  </div>
+ </div>
+</div>
+ </form>
+ 
+ 
+ 
+ <div class="form-group row">
+   <div class="col-md-12">
+    <table class="table table-bordered">
+       <thead >
+       <tr>
+           <th>Id</th>
+           <th>Name</th>
+           <th>Code</th>
+           <th>Description</th>
+           <th>portType</th>
+       </tr>
+       </thead>
+       <tr *ngFor="let por of port | paginate:{
+           itemsPerPage: tableSize,
+           currentPage: page,
+           totalItems: count}; let i = index">
+           <td>{{por.id}}</td>
+           <td>{{por.name}}</td>
+           <td>{{por.code}}</td>
+           <td>{{por.description}}</td>
+           <td>{{por.portType}}</td>
+       </tr>
+       </table>
+       <div>
+       <pagination-controls 
+         previousLabel="Prev"
+         nextLabel="Next"
+         (pageChange)="OnTableDataChange($event)">
+       </pagination-controls>
+       </div>
+       </div>
+     </div></div>

@@ -1,0 +1,68 @@
+<p>Agent Details</p>
+<div class="container">
+    <div  class="form-group row">
+  
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="name">Search with<span>*</span></label>
+            <select class="form-select" name="portType" id="portType" >
+                <option  value="SP">Port</option>
+                <option  value="ICD">ICD</option>
+                <option  value="Ag">Agent Code</option>
+            </select>
+          </div>
+          
+        </div>  
+        <div class="col-md-5">
+         <div class="form-group">
+          <label for="name">Port<span>*</span></label>
+          <input type="text"  class="form-control"  
+           matInput  [formControl]="PortControl"  [matAutocomplete]="autoPort" >
+          <mat-autocomplete #autoPort="matAutocomplete"  (optionSelected)='selectOption($event)' >
+            <mat-option *ngFor="let Ports of  PortfilteredOptions | async"  [value]="Ports.id" >
+              {{Ports.code}}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+      </div>
+         
+        
+        <div class="col-md-1">
+            <div class="form-group">
+                <button type="submit" class="btn btn-default" >Clear</button> 
+            </div>
+        </div>   
+        <div class="col-md-1">
+            <div class="form-group">  
+                <button type="submit" class="btn btn-primary" (click)="Search()" >Search</button> 
+            </div>
+        </div>
+      </div>
+        <div class="col-md-3">
+            
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+             <table class="table table-bordered">
+                <thead >
+                <tr>
+                    <th>SL No.</th>
+                    <th>Agent Code</th>
+                    <th>Agent Name</th>
+                    <th>Action</th>
+                    
+                </tr>
+                </thead>
+                <tr *ngFor="let agent of Agent ">
+                    <td>{{agent.officeId}}</td>
+                   
+                    <td>{{agent.officeCode}}</td>
+                    <td>{{agent.officeName}}</td>
+                    <td><button type="submit" class="btn btn-primary" (click)="SelectPodagent(agent)"  >Select</button></td>
+                    
+                </tr>
+                </table>
+               
+                </div>
+              </div>
+</div>
